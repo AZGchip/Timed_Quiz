@@ -1,62 +1,69 @@
 <!DOCTYPE html>
+
 <head>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div>
         <input type="button" value="Start" onclick="question()">
     </div>
-<div id="quiz-box">
-    <div id="q0">
-        <h2 class="question">"1"+"1"===</h2><hr>
-        <ol>
-            <li class="answer"id="a0"><input type="button" value="2"></li>
-            <li class="answer"id="a1"><input type="button" value="'11'"></li>
-            <li class="answer"id="a2"><input type="button" value="11"></li>
-            <li class="answer"id="a3"><input type="button" value="'2'"></li>
-            <li><input type="button" value="submit answer"onclick="nextQuestion()"></li>
-        </ol>
+    <div id="quiz-box">
+        <div id="q0">
+            <h2 class="question">"1"+"1"===</h2>
+            <hr>
+            <ol>
+                <li class="answer" id="a0"><input type="button" value="2" onclick="ans(0)"></li>
+                <li class="answer" id="a1"><input type="button" value="'11'" onclick="ans(1)"></li>
+                <li class="answer" id="a2"><input type="button" value="11" onclick="ans(2)"></li>
+                <li class="answer" id="a3"><input type="button" value="'2'" onclick="ans(3)"></li>
+                <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
+            </ol>
+        </div>
+        <div id="q1">
+            <h2 class="question">2 +"1"===</h2>
+            <hr>
+            <ol>
+                <li class="answer"><input type="button" value="2" onclick="ans(0)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(1)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(2)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(3)"></li>
+                <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
+            </ol>
+        </div>
+        <div id="q2">
+            <h2 class="question">question 3</h2>
+            <hr>
+            <ol>
+                <li class="answer"><input type="button" value="2" onclick="ans(0)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(1)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(2)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(3)"></li>
+                <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
+            </ol>
+        </div>
+        <div id="q3">
+            <h2 class="question">question 4</h2>
+            <hr>
+            <ol>
+                <li class="answer"><input type="button" value="2" onclick="ans(0)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(1)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(2)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(3)"></li>
+                <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
+            </ol>
+        </div>
+        <div id="q4">
+            <h2 class="question">question 5</h2>
+            <hr>
+            <ol>
+                <li class="answer"><input type="button" value="2" onclick="ans(0)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(1)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(2)"></li>
+                <li class="answer"><input type="button" value="'11'" onclick="ans(3)"></li>
+                <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
+            </ol>
+        </div>
     </div>
-    <div id="q1">
-        <h2 class="question">2 +"1"===</h2><hr>
-        <ol>
-            <li class="answer">21</li>
-            <li class="answer">"3"</li>
-            <li class="answer">3</li>
-            <li class="answer">"21"</li>
-            <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
-        </ol>
-    </div>
-    <div id="q2">
-        <h2 class="question">question 3</h2><hr>
-        <ol>
-            <li class="answer">21</li>
-            <li class="answer">"3"</li>
-            <li class="answer">3</li>
-            <li class="answer">"21"</li>
-            <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
-        </ol>
-    </div>
-    <div id="q3">
-        <h2 class="question">question 4</h2><hr>
-        <ol>
-            <li class="answer">21</li>
-            <li class="answer">"3"</li>
-            <li class="answer">3</li>
-            <li class="answer">"21"</li>
-            <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
-        </ol>
-    </div>
-    <div id="q4">
-        <h2 class="question">question 5</h2><hr>
-        <ol>
-            <li class="answer">21</li>
-            <li class="answer">"3"</li>
-            <li class="answer">3</li>
-            <li class="answer">"21"</li>
-            <li><input type="button" value="submit answer" onclick="nextQuestion()"></li>
-        </ol>
-    </div>
-</div>  
-<script src="code.js"></script>
+    <script src="code.js"></script>
 </body>
