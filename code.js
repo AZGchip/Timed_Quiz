@@ -37,9 +37,9 @@ function nextQuestion() {
     question()
 }
 function buttons(){
-selectedBox.getElementsByClassName("a0")[0].addEventListener("click")
-selectedBox.getElementsByClassName("a1")[0].addEventListener("click")
-selectedBox.getElementsByClassName("a2")[0].addEventListener("click")
-selectedBox.getElementsByClassName("a3")[0].addEventListener("click")
+document.getElementById(sq).getElementsByClassName("a0")[0].addEventListener("click")
+document.getElementById(sq).getElementsByClassName("a1")[0].addEventListener("click")
+document.getElementById(sq).getElementsByClassName("a2")[0].addEventListener("click")
+document.getElementById(sq).getElementsByClassName("a3")[0].addEventListener("click")
 }
 
