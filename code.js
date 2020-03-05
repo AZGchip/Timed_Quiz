@@ -9,7 +9,8 @@ function startQuiz() {
 
 }
 var questionPick = ["0", "1", "2", "3", "4"]
-var questions = ["Question1", "Question2", "Question3", "Question4", "Question5"]
+var questions = ["'1'+'1'===", "Question2", "Question3", "Question4", "Question5"]
+var answers = []
 var questionOrder = []
 var checkAnswer = {
     q0: "1",
@@ -92,16 +93,25 @@ $(".a4").on("click", function () {
     ans(4);
     
 })
-//determines if user answer id 
+//determines if user answer is correct.
 function resultMaker() {
     $("#quiz-box").append(`<h1>Quiz Finished</h1>`)
     for (var i = 0; i < questionOrder.length; i++) {
-        if (checkAnswer["q" + questionOrder[i]] == uInput["u" + i]) {
-            console.log("correct")
+        var quest = "q" + questionOrder[i];
+        var answ = uInput["u" + i]
+        if (checkAnswer[quest] == answ ) {
+            $("#quiz-box").append(""+ questions[quest] +"<hr>");
+            correctAnswer(quest,answ)
         }
         else{
             $("#quiz-box").append(""+ questions[questionOrder[i]] +"<hr>")
+            
         }
     }
 
+}
+function correctAnswer(q,a){
+    var qID = "#" + q;
+    var aClass = ".a"+ a
+    $("#quiz-box").append($(qID).find(aClass).text())
 }
