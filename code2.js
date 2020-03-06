@@ -7,6 +7,9 @@ var answer3 = ["8", "9", "10", "11"];
 var answer4 = ["10", "5", "55", "15"];
 var answerObj = [answer0, answer1, answer2, answer3, answer4];
 var userAnswer = [];
+var correct
+var wrong
+var noAnswer
 
 var questAmount = quizQuestions.length;
 var q = 0;
@@ -17,32 +20,63 @@ nextQuestion()
 function nextQuestion() {
 
     var selAns = answerObj[q]
-    $("#quizbox").append("<h1 class='question'>" + quizQuestions[q] + "</h1>")
+
     for (var a = 0; a < selAns.length; a++) {
-        var quizButton = $("<div class='button'>");
+        var rand = Math.round(Math.random());
+        var quizButton = $("<div class='btn btn-primary btn-block qbutton'>");
         $(quizButton).attr("answer", selAns[a]);
         $(quizButton).text(selAns[a]);
-        $("#quizbox").append(quizButton)
-    }
-    $(".button").on("click", function () {
-        userAnswer.push($(this).attr("answer"));
-        q++;
-        $("#quizbox").empty();
-        if(q < quizQuestions.length){
-        nextQuestion()   
+        if (rand === 1) {
+            $("#quizbox").append(quizButton);
         }
-        if(q > quizQuestions.length){
-        quizEnd()
+        else {
+            $("#quizbox").prepend(quizButton);
         }
         
+    }
+    $("#quizbox").prepend(`<h1 class="question col-md-12">` + quizQuestions[q] + `</h1>`);
+   
+    $(".qbutton").on("click", function () {
+        userAnswer.push($(this).attr("answer"));
+
+        $("#quizbox").empty();
+        q++
+        if (q == questAmount) {
+            quizEnd()
+
+        }
+        if (q < questAmount) {
+
+            nextQuestion()
+        }
     })
 
 
 }
-function quizEnd(){
-    for (var i = 0; i< quizQuestions.length; i++) {
-        
-        
+function quizEnd() {
+    for (var i = 0; i < questAmount; i++) {
+        var cAnswer = answerObj[i];
+        if (cAnswer[0] == userAnswer[i]) {
+            var result = $(`
+            <div class="col-md-12 question">`+ quizQuestions[i] + `</div>
+            <div class="row">
+              <div class="col-md-6">`+ cAnswer[0] + `</div>
+              <div class="col-md-6 bg-success">`+ userAnswer[i] + `</div>
+            </div>
+            `)
+            $("#quizbox").append(result)
+        }
+        else {
+            var badresult = $(`
+            <div class="col-md-12 question">`+ quizQuestions[i] + `</div>
+            <div class="row">
+              <div class="col-md-6">`+ cAnswer[0] + `</div>
+              <div class="col-md-6 bg-warning">`+ userAnswer[i] + `</div>
+            </div>
+            `)
+            $("#quizbox").append(badresult)
+        }
+
     }
 }
 
@@ -56,16 +90,3 @@ function timeStart(time) {
 
 
 
-// for(var i = 0;i<letters.length;i++){
-//     var letterBtn = $("<button class='letter-button letter letter-button-color'>");
-//       $(letterBtn).attr("data-letter",letters[i])
-//       $(letterBtn).text(letters[i])
-//       $("#buttons").append(letterBtn)
-//   }
-//   $(".letter-button").on("click",function(){
-//     var fridgeMagnet = $("<div class='letter fridge-color'>").text($(this).attr("data-letter"))
-//     $("#display").append(fridgeMagnet)
-//   })
-//   $("#clear").on("click",function(){
-//     $("#display").empty();
-//     })
