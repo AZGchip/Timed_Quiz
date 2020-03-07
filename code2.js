@@ -1,26 +1,33 @@
 //questions and answers
-var quizQuestions = ["1+1=", "2+2=", "3+3=", "4+4=", "5+5="];
-var answer0 = ["2", "11", "45", "10"];
+var quizQuestions = ["'1'+'1'=", "2+2=", "3+3=", "4+4=", "5+5="];
+var answer0 = ["11", "2", "45", "10"];
 var answer1 = ["4", "22", "8", "0"];
 var answer2 = ["6", "9", "2", "5"];
 var answer3 = ["8", "9", "10", "11"];
 var answer4 = ["10", "5", "55", "15"];
 var answerObj = [answer0, answer1, answer2, answer3, answer4];
 var userAnswer = [];
-var correct
-var wrong
-var noAnswer
+var correct = 0;
+var wrong = 0;
+var noAnswer = 0;
+var interval;
 
 var questAmount = quizQuestions.length;
 var q = 0;
 
-// function quizStart() {
-//     timeStart(100)
-nextQuestion()
+$("#quizbox").html(`
+<div class="row">
+<h1 class="title col-md-12 text-center"> TIMED QUIZ </h1>
+</div>
+<div class="row">
+    <div class="col-md-12 btn "id="start-button">Start Quiz</div>
+</div>
+`)
+
 function nextQuestion() {
 
     var selAns = answerObj[q]
-
+    // for loop builds button based on answer array. math.rounds selects randomly from 1 to 0. appends if 1. prepends if 0
     for (var a = 0; a < selAns.length; a++) {
         var rand = Math.round(Math.random());
         var quizButton = $("<div class='btn btn-primary btn-block qbutton'>");
@@ -32,10 +39,12 @@ function nextQuestion() {
         else {
             $("#quizbox").prepend(quizButton);
         }
-        
+
     }
+    //the question is added after the answers are displayed and is prepended to the top of #QUIZBOX
     $("#quizbox").prepend(`<h1 class="question col-md-12">` + quizQuestions[q] + `</h1>`);
-   
+
+    //on click function stores button value to USERANSWER, clears #QUIZBOX , adds 1 to Q , and either starts NEXTQUESTION() again or starts QUIZEND()
     $(".qbutton").on("click", function () {
         userAnswer.push($(this).attr("answer"));
 
@@ -54,39 +63,90 @@ function nextQuestion() {
 
 }
 function quizEnd() {
+    clearInterval(interval)
+    $("#quizbox").append(`
+    <h1 class="text-center col-md-12 text-center"> Quiz Over </h1>
+    `)
     for (var i = 0; i < questAmount; i++) {
         var cAnswer = answerObj[i];
         if (cAnswer[0] == userAnswer[i]) {
+            correct++;
             var result = $(`
-            <div class="col-md-12 question">`+ quizQuestions[i] + `</div>
+            <h3 class="col-md-12 question text-center">`+ quizQuestions[i] + `</h3>
             <div class="row">
-              <div class="col-md-6">`+ cAnswer[0] + `</div>
-              <div class="col-md-6 bg-success">`+ userAnswer[i] + `</div>
-            </div>
+              <div class="col-md-6 text-center ">Correct Answer: `+ cAnswer[0] + `</div>
+              <div class="col-md-6 bg-success text-center">Your Answer: `+ userAnswer[i] + `</div>
+            </div><hr>
             `)
             $("#quizbox").append(result)
         }
-        else {
-            var badresult = $(`
-            <div class="col-md-12 question">`+ quizQuestions[i] + `</div>
+        else if (userAnswer[i] == "Not Answered") {
+            noAnswer++;
+            var noresult = $(`
+            <h3 class="col-md-12 question text-center">`+ quizQuestions[i] + `</h3>
             <div class="row">
-              <div class="col-md-6">`+ cAnswer[0] + `</div>
-              <div class="col-md-6 bg-warning">`+ userAnswer[i] + `</div>
-            </div>
+              <div class="col-md-6 text-center ">Correct Answer: `+ cAnswer[0] + `</div>
+              <div class="col-md-6 bg-warning text-center">Your Answer: `+ userAnswer[i] + `</div>
+            </div><hr>
             `)
-            $("#quizbox").append(badresult)
+            $("#quizbox").append(noresult);
         }
-
+        else {
+            wrong++;
+            var badresult = $(`
+            <h3 class="col-md-12 question text-center">`+ quizQuestions[i] + `</h3>
+            <div class="row">
+              <div class="col-md-6 text-center ">Correct Answer: `+ cAnswer[0] + `</div>
+              <div class="col-md-6 bg-danger text-center">Your Answer: `+ userAnswer[i] + `</div>
+            </div><hr>
+            `)
+            $("#quizbox").append(badresult);
+        }
+        
     }
+    var percent = (correct / quizQuestions.length) * 100;
+    $("#quizbox").append(`
+        <div class="row">
+        <h4 class="col-md-4 text-center">Correct: `+ correct + `</h4>
+        <h4 class="col-md-4 text-center">Incorrect: `+ wrong + `</h4>
+        <h4 class="col-md-4 text-center">No Answer: `+ noAnswer + `</h4>
+        </div><hr>
+        <div class="row">
+        <h3 class="col-md-12 text-center">Your Score: `+ percent +`%</h3>
+        </div>
+        `)
+
+
 }
 
-function timeStart(time) {
-    setInterval(function () {
-        time--
+//timer
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
+        display.text(minutes + ":" + seconds);
+        // when timer hits zero clears interval, fills in any blanks in USERANSWER 
+        if (--timer < 0) {
+
+            while (userAnswer.length < quizQuestions.length) {
+                userAnswer.push("Not Answered");
+            }
+
+            $("#quizbox").empty();
+            quizEnd();
+
+        }
     }, 1000);
 }
 
-
-
-
+$("#start-button").on("click", function () {
+    $("#quizbox").empty();
+    var min = 60 * 1,
+        display = $('#time');
+    startTimer(min, display);
+    nextQuestion();
+});
