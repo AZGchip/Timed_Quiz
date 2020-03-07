@@ -14,13 +14,13 @@ var interval;
 
 var questAmount = quizQuestions.length;
 var q = 0;
-
+//on startup displays title
 $("#quizbox").html(`
 <div class="row">
-<h1 class="title col-md-12 text-center"> TIMED QUIZ </h1>
+<h1 class="title col-md-12 text-center "> TIMED QUIZ </h1>
 </div>
 <div class="row">
-    <div class="col-md-12 btn "id="start-button">Start Quiz</div>
+    <div class="col-md-12 btn btn-primary btn-lg "id="start-button">Start Quiz</div>
 </div>
 `)
 
@@ -62,6 +62,7 @@ function nextQuestion() {
 
 
 }
+//when all answers solved or timer runs out, quiz end displays results
 function quizEnd() {
     clearInterval(interval)
     $("#quizbox").append(`
@@ -69,6 +70,7 @@ function quizEnd() {
     `)
     for (var i = 0; i < questAmount; i++) {
         var cAnswer = answerObj[i];
+        //if the USERANSWER for the question is equal to CANSWER[0], append result
         if (cAnswer[0] == userAnswer[i]) {
             correct++;
             var result = $(`
@@ -80,6 +82,7 @@ function quizEnd() {
             `)
             $("#quizbox").append(result)
         }
+        //if not answered, appends not answered result
         else if (userAnswer[i] == "Not Answered") {
             noAnswer++;
             var noresult = $(`
@@ -91,6 +94,7 @@ function quizEnd() {
             `)
             $("#quizbox").append(noresult);
         }
+        //if incorrect append BADRESULT
         else {
             wrong++;
             var badresult = $(`
@@ -104,6 +108,7 @@ function quizEnd() {
         }
         
     }
+    // Scoreboard bottom displays correct, incorrect, no answer, and percent correct
     var percent = (correct / quizQuestions.length) * 100;
     $("#quizbox").append(`
         <div class="row">
@@ -112,10 +117,21 @@ function quizEnd() {
         <h4 class="col-md-4 text-center">No Answer: `+ noAnswer + `</h4>
         </div><hr>
         <div class="row">
-        <h3 class="col-md-12 text-center">Your Score: `+ percent +`%</h3>
-        </div>
+        <h3 class="col-md-12 text-center">Your Score: </h3>
+        </div
+        <div class="row">
+        <h2 class="col-md-12 text-center"id="percent">`+percent+`%</h2>
+        </div
         `)
-
+    if(percent >= 80){
+        $("#percent").css("color","green")
+    }
+    if(percent < 80 && percent > 60){
+        $("#percent").css("color","orange")
+    }
+    if(percent <= 60){
+        $("#percent").css("color","red")
+    }
 
 }
 
@@ -142,7 +158,7 @@ function startTimer(duration, display) {
         }
     }, 1000);
 }
-
+//start button starts timer and quiz
 $("#start-button").on("click", function () {
     $("#quizbox").empty();
     var min = 60 * 1,
